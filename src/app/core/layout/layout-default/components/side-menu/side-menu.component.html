@@ -1,3 +1,18 @@
-<p>
-  side-menu works!
-</p>
+<nav class="mat-elevation-z2">
+  <button
+    mat-button
+    [routerLink]="['/personagens']"
+    routerLinkActive="btn--active"
+  >
+    <mat-icon fontIcon="groups" />
+    Personagens
+  </button>
+  <button
+    mat-button
+    [routerLink]="['/episodios']"
+    routerLinkActive="btn--active"
+  >
+    <mat-icon fontIcon="movie" />
+    Episódios
+  </button>
+</nav>
