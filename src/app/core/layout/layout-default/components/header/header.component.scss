@@ -1,8 +1,11 @@
-:host ::ng-deep .mdc-text-field--outlined {
-  --mdc-outlined-text-field-container-shape: 28px;
-  mat-icon {
-    margin-left: 12px;
-    padding-right: 0;
+:host {
+  z-index: 10;
+  ::ng-deep .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 28px;
+    mat-icon {
+      margin-left: 12px;
+      padding-right: 0;
+    }
   }
 }
 
@@ -12,7 +15,6 @@ header {
   align-items: center;
   width: 100%;
   padding: 12px 32px;
-  z-index: 10;
   .logo {
     width: 170px;
   }

@@ -1,28 +1,16 @@
 <section class="characters-page">
-  <div class="countries-grid">
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
-    <article class="card">
-      <header>aff</header>
-    </article>
+  <div class="characters-grid">
+    @for (character of charactersList; track $index) {
+    <app-character-card
+      [character]="character"
+      (click)="viewCharacterDetail(character.id)"
+    />
+
+    }
   </div>
 </section>
+
+<!--
+infinite-scroll[infiniteScrollDisdtance]="5"
+[infiniteScrollDisdtance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
+(scrolledUp)="onScroll()" -->

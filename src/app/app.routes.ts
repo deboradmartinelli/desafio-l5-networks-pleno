@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutDefaultComponent } from './core/layout/layout-default/containers/layout-default/layout-default.component';
+import { LayoutLoginComponent } from './core/layout/layout-login/layout-login.component';
 
 export const routes: Routes = [
   {
@@ -18,5 +19,9 @@ export const routes: Routes = [
     component: LayoutDefaultComponent,
     loadChildren: () =>
       import('./pages/episodes/routes').then((mod) => mod.EPISODES_ROUTES),
+  },
+  {
+    path: 'login',
+    loadComponent: () => LayoutLoginComponent,
   },
 ];

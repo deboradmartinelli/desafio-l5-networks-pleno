@@ -2,6 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
+  withComponentInputBinding,
   withPreloading,
   withViewTransitions,
 } from '@angular/router';
@@ -16,8 +17,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withViewTransitions(),
-      withPreloading(PreloadAllModules)
+      withPreloading(PreloadAllModules),
+      withComponentInputBinding()
     ),
+
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {

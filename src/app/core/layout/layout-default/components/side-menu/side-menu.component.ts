@@ -12,6 +12,7 @@ import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
+  private _id: any;
   constructor() {}
 
   ngOnInit() {}
