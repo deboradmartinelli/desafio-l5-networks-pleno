@@ -15,7 +15,7 @@
   </h4>
   } @else {
   <h4>
-    Exibindo <strong>{{ characterInfo?.count }}</strong> personagens
+    Encontrados <strong>{{ characterInfo?.count }}</strong> personagens
   </h4>
   } @if (charactersList.length) {
   <div class="characters-grid">
@@ -37,7 +37,3 @@
 } @else {
 <app-loader />
 }
-<!--
-infinite-scroll[infiniteScrollDisdtance]="5"
-[infiniteScrollDisdtance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
-(scrolledUp)="onScroll()" -->

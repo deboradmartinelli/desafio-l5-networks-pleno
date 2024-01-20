@@ -1,14 +1,22 @@
 <header class="mat-elevation-z2">
   <img class="logo" src="../../../../../../assets/imgs/logo.svg" alt="" />
-
-  <mat-form-field appearance="outline" class="search-input">
-    <mat-label>Pesquisar</mat-label>
-    <mat-icon matPrefix>search</mat-icon>
-    <input
-      matInput
-      #search
-      [(ngModel)]="searchValue"
-      placeholder="Pesquisar nomes"
-    />
-  </mat-form-field>
+  @if(searchVisibility) {
+  <div class="search-wrapper">
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>Pesquisar</mat-label>
+      <mat-icon matPrefix class="search-icon">search</mat-icon>
+      <input
+        matInput
+        #search
+        [(ngModel)]="searchValue"
+        placeholder="Pesquisar nomes"
+      />
+    </mat-form-field>
+    @if(searchValue) {
+    <button mat-icon-button aria-label="Limpar" (click)="clearSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </div>
+  }
 </header>

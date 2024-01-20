@@ -8,7 +8,7 @@
     Voltar
   </button>
 
-  @if (character) {
+  @if (!loading) {
   <mat-card class="card">
     <div class="character-info">
       <img src="{{ character.image }}" alt="" />
@@ -17,7 +17,9 @@
           <mat-card-title>
             {{ character.name }}
           </mat-card-title>
-          <mat-card-subtitle> {{ character.status }}</mat-card-subtitle>
+          <mat-card-subtitle>
+            <app-character-status [status]="character.status" />
+          </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="content-group">
@@ -51,12 +53,18 @@
     </div>
     <div class="episodes-info">
       <h2>Episódios em que apareceu:</h2>
+      @if (!loadingEpisodes) {
       <div class="episodes-grid mat-elevation-z1">
         @for (episode of episodesList; track $index) {
         <app-episode-card [episode]="episode" />
         }
       </div>
+      } @else {
+      <app-loader />
+      }
     </div>
   </mat-card>
+  } @else {
+  <app-loader />
   }
 </section>

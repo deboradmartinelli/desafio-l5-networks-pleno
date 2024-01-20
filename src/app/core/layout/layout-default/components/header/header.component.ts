@@ -11,11 +11,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SearchService } from '../../../../services/search.service';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, FormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    FormsModule,
+    MatButtonModule,
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -24,12 +31,16 @@ export class HeaderComponent implements OnInit {
   private readonly search = inject(SearchService);
 
   searchValue;
+  searchVisibility;
 
   constructor() {}
 
   ngOnInit() {
     this.search.searchValue.subscribe((value) => {
       this.searchValue = value;
+    });
+    this.search.visibility.subscribe((value) => {
+      this.searchVisibility = value;
     });
   }
 
@@ -42,6 +53,11 @@ export class HeaderComponent implements OnInit {
   }
 
   searchHandler() {
-    this.search.searchValue.next(this.searchValue);
+    this.search.setSearchValue(this.searchValue);
+  }
+
+  clearSearch() {
+    this.searchValue = '';
+    this.searchHandler();
   }
 }

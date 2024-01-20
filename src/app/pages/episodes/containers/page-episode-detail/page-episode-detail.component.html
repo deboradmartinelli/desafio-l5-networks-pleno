@@ -3,7 +3,7 @@
     <mat-icon fontIcon="arrow_back" />
     Voltar
   </button>
-  @if (episode) {
+  @if (!loading) {
   <mat-card class="card">
     <div class="episode-info">
       <div>
@@ -16,19 +16,25 @@
         <mat-card-content>
           <div class="content-group">
             <h3>Foi ao ar em:</h3>
-            <p>{{ episode.air_date | date : "longDate" : "pt-Br" }}</p>
+            <p>{{ episode.air_date | date : "dd/MM/yyyy" }}</p>
           </div>
         </mat-card-content>
       </div>
     </div>
     <div class="characters-info">
       <h2>Personagens que apareceram neste Episódio:</h2>
+      @if (!loadingCharacters) {
       <div class="characters-grid mat-elevation-z1">
         @for (character of charactersList; track $index) {
         <app-character-card [character]="character" />
         }
       </div>
+      } @else {
+      <app-loader />
+      }
     </div>
   </mat-card>
+  } @else {
+  <app-loader />
   }
 </section>

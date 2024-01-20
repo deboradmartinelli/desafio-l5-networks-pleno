@@ -1,5 +1,12 @@
 @if (!loading) {
-<section class="episodes-page">
+<section
+  class="episodes-page"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
+>
   @if (searchValue && episodesList?.length) {
   <h4>
     Encontrados <strong>{{ episodeInfo?.count }}</strong> resultados para
@@ -8,7 +15,7 @@
   </h4>
   } @else {
   <h4>
-    Exibindo <strong>{{ episodeInfo?.count }}</strong> episódios
+    Encontrados <strong>{{ episodeInfo?.count }}</strong> episódios
   </h4>
   } @if (episodesList.length) {
   <div class="episodes-grid">

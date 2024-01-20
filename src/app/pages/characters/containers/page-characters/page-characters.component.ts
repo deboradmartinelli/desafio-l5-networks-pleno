@@ -38,10 +38,15 @@ export class PageCharactersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.search.setVisibility(true);
     this.search.searchValue.subscribe((value) => {
       this.searchValue = value;
       this.getAllCharacters();
     });
+  }
+
+  ngOnDestroy() {
+    this.search.setVisibility(false);
   }
 
   getAllCharacters() {
@@ -64,10 +69,4 @@ export class PageCharactersComponent implements OnInit {
         this.charactersList.push(...res.results);
       });
   }
-
-  onScrollUp() {
-    alert('Voce esta no inicio');
-  }
-  trackByCharaterId: TrackByFunction<any> = (index: number, character: any) =>
-    character.id;
 }

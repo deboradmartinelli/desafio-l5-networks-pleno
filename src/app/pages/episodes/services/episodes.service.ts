@@ -24,9 +24,19 @@ export class EpisodesService {
 
     return this.http.get<EpisodeApiResponse>(this.url, { params: params }).pipe(
       catchError((error) => {
-        return of({ info: null, results: [] });
+        const info = {
+          count: 0,
+          pages: 0,
+          next: '',
+          prev: '',
+        };
+        return of({ info, results: [] });
       })
     );
+  }
+
+  getNextPage(url): Observable<EpisodeApiResponse> {
+    return this.http.get<EpisodeApiResponse>(url);
   }
 
   getEpisodeById(id: string): Observable<EpisodeEntity> {

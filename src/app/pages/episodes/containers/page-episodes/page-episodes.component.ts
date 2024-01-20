@@ -10,11 +10,17 @@ import {
   Info,
 } from '../../models/episodes.interface';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-page-episodes',
   standalone: true,
-  imports: [EpisodeCardComponent, RouterModule, LoaderComponent],
+  imports: [
+    EpisodeCardComponent,
+    RouterModule,
+    InfiniteScrollModule,
+    LoaderComponent,
+  ],
   templateUrl: './page-episodes.component.html',
   styleUrls: ['./page-episodes.component.scss'],
 })
@@ -28,15 +34,19 @@ export class PageEpisodesComponent implements OnInit {
 
   episodesList: EpisodeEntity[] = [];
   episodeInfo: Info;
-  nextUrl: string;
 
   constructor() {}
 
   ngOnInit() {
+    this.search.setVisibility(true);
     this.search.searchValue.subscribe((value) => {
       this.searchValue = value;
       this.getAllEpisodes();
     });
+  }
+
+  ngOnDestroy() {
+    this.search.setVisibility(false);
   }
 
   getAllEpisodes() {
@@ -46,8 +56,15 @@ export class PageEpisodesComponent implements OnInit {
       .subscribe((res: EpisodeApiResponse) => {
         this.episodesList = res.results;
         this.episodeInfo = res.info;
-        this.nextUrl = res.info.next;
         this.loading = false;
       });
+  }
+
+  onScroll() {
+    if (!this.episodeInfo.next) return;
+    this.episodesService.getNextPage(this.episodeInfo.next).subscribe((res) => {
+      this.episodeInfo = res.info;
+      this.episodesList.push(...res.results);
+    });
   }
 }

@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { EpisodesService } from '../../../episodes/services/episodes.service';
 import { EpisodeCardComponent } from '../../../episodes/components/episode-card/episode-card.component';
 import { EpisodeEntity } from '../../../episodes/models/episodes.interface';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { CharacterStatusComponent } from '../../components/character-status/character-status.component';
 
 @Component({
   selector: 'app-page-character-detail',
@@ -20,6 +22,8 @@ import { EpisodeEntity } from '../../../episodes/models/episodes.interface';
     MatButtonModule,
     MatIconModule,
     EpisodeCardComponent,
+    LoaderComponent,
+    CharacterStatusComponent,
   ],
   templateUrl: './page-character-detail.component.html',
   styleUrls: ['./page-character-detail.component.scss'],
@@ -30,6 +34,8 @@ export class PageCharacterDetailComponent implements OnInit {
   @Input() id: string = '';
   character: CharacterEntity;
   episodesList: EpisodeEntity[] = [];
+  loading: boolean = false;
+  loadingEpisodes: boolean = false;
 
   constructor() {}
 
@@ -38,7 +44,9 @@ export class PageCharacterDetailComponent implements OnInit {
   }
 
   getCharacterDetail() {
+    this.loading = true;
     this.charactersService.getCharacterById(this.id).subscribe((res) => {
+      this.loading = false;
       this.character = res;
       this.getCharacterEpisodes();
     });
@@ -46,6 +54,7 @@ export class PageCharacterDetailComponent implements OnInit {
 
   getCharacterEpisodes() {
     if (!this.character.episode.length) return;
+    this.loadingEpisodes = true;
 
     const episodesIDs: Array<string> = this.character.episode.map(
       (episodioURL) => {
@@ -59,10 +68,12 @@ export class PageCharacterDetailComponent implements OnInit {
         .getEpisodeById(episodesIDs.toString())
         .subscribe((res) => {
           this.episodesList = [res];
+          this.loadingEpisodes = false;
         });
     } else {
       this.episodesService.getEpisodesByIds(episodesIDs).subscribe((res) => {
         this.episodesList = res;
+        this.loadingEpisodes = false;
       });
     }
   }

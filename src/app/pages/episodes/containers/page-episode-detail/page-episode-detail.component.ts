@@ -9,6 +9,7 @@ import { EpisodeEntity } from '../../models/episodes.interface';
 import { CharactersService } from '../../../characters/services/characters.service';
 import { CharacterEntity } from '../../../characters/models/character.interface';
 import { CharacterCardComponent } from '../../../characters/components/character-card/character-card.component';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-page-episode-detail',
@@ -20,6 +21,7 @@ import { CharacterCardComponent } from '../../../characters/components/character
     MatButtonModule,
     MatIconModule,
     CharacterCardComponent,
+    LoaderComponent,
   ],
   templateUrl: './page-episode-detail.component.html',
   styleUrls: ['./page-episode-detail.component.scss'],
@@ -30,6 +32,8 @@ export class PageEpisodeDetailComponent implements OnInit {
   @Input() id: string = '';
   episode: EpisodeEntity;
   charactersList: CharacterEntity[] = [];
+  loading: boolean = false;
+  loadingCharacters: boolean = false;
 
   constructor() {}
 
@@ -38,7 +42,9 @@ export class PageEpisodeDetailComponent implements OnInit {
   }
 
   getEpisodeDetail() {
+    this.loading = true;
     this.episodesService.getEpisodeById(this.id).subscribe((res) => {
+      this.loading = false;
       this.episode = res;
       this.getCharacterEpisodes();
     });
@@ -46,7 +52,7 @@ export class PageEpisodeDetailComponent implements OnInit {
 
   getCharacterEpisodes() {
     if (!this.episode.characters.length) return;
-
+    this.loadingCharacters = true;
     const characterIDs: Array<string> = this.episode.characters.map(
       (characterURL) => {
         const urlParts = characterURL.split('/');
@@ -59,12 +65,14 @@ export class PageEpisodeDetailComponent implements OnInit {
         .getCharacterById(characterIDs.toString())
         .subscribe((res) => {
           this.charactersList = [res];
+          this.loadingCharacters = false;
         });
     } else {
       this.charactersService
         .getCharactersByIds(characterIDs)
         .subscribe((res) => {
           this.charactersList = res;
+          this.loadingCharacters = false;
         });
     }
   }
