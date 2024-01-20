@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import {
   EpisodeApiResponse,
   EpisodeEntity,
@@ -14,8 +14,19 @@ export class EpisodesService {
   url = 'https://rickandmortyapi.com/api/episode/';
   constructor() {}
 
-  getAllEpisodes(): Observable<EpisodeApiResponse> {
-    return this.http.get<EpisodeApiResponse>(this.url);
+  getAllEpisodes(nameFilter?): Observable<EpisodeApiResponse> {
+    let params = new HttpParams();
+    if (nameFilter) {
+      params = params.append('name', nameFilter);
+    } else {
+      params = null;
+    }
+
+    return this.http.get<EpisodeApiResponse>(this.url, { params: params }).pipe(
+      catchError((error) => {
+        return of({ info: null, results: [] });
+      })
+    );
   }
 
   getEpisodeById(id: string): Observable<EpisodeEntity> {

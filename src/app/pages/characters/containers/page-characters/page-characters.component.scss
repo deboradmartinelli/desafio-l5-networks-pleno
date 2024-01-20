@@ -1,11 +1,12 @@
 :host {
   width: 100%;
-  overflow-y: auto;
 }
 
 .characters-page {
   width: 100%;
   padding: 48px;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
   .characters-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(max(550px, 30vw), 2fr));
@@ -16,5 +17,6 @@
     align-items: stretch;
     justify-content: stretch;
     align-content: stretch;
+    overflow-y: auto;
   }
 }

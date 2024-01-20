@@ -4,10 +4,13 @@ import { CharacterCardComponent } from '../../components/character-card/characte
 import {
   CharacterEntity,
   CharactersApiResponse,
+  Info,
 } from '../../models/character.interface';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SearchService } from '../../../../core/services/search.service';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-page-characters',
@@ -17,41 +20,49 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RouterModule,
     CommonModule,
     InfiniteScrollModule,
+    LoaderComponent,
   ],
   templateUrl: './page-characters.component.html',
   styleUrls: ['./page-characters.component.scss'],
 })
 export class PageCharactersComponent implements OnInit {
+  private readonly search = inject(SearchService);
   private readonly charactersService = inject(CharactersService);
 
-  charactersList: CharacterEntity[];
-  nextUrl: string = '';
+  searchValue;
+
+  loading: boolean = false;
+
+  charactersList: CharacterEntity[] = [];
+  characterInfo: Info;
   constructor() {}
 
   ngOnInit(): void {
-    this.getAllCharacters();
+    this.search.searchValue.subscribe((value) => {
+      this.searchValue = value;
+      this.getAllCharacters();
+    });
   }
 
   getAllCharacters() {
+    this.loading = true;
     this.charactersService
-      .getAllCharacters()
+      .getAllCharacters(this.searchValue)
       .subscribe((res: CharactersApiResponse) => {
         this.charactersList = res.results;
-        this.nextUrl = res.info.next;
+        this.characterInfo = res.info;
+        this.loading = false;
       });
   }
 
   onScroll() {
-    this.charactersService.getAllCharacters().subscribe({
-      next: (res) => {
-        if (res.info.next && res.info.next === null) {
-          this.nextUrl = res.info.next;
-          Array.from(res.results).forEach((element) => {
-            this.charactersList = [...this.charactersList, element];
-          });
-        }
-      },
-    });
+    if (!this.characterInfo.next) return;
+    this.charactersService
+      .getNextPage(this.characterInfo.next)
+      .subscribe((res) => {
+        this.characterInfo = res.info;
+        this.charactersList.push(...res.results);
+      });
   }
 
   onScrollUp() {

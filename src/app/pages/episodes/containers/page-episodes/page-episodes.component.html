@@ -1,7 +1,32 @@
+@if (!loading) {
 <section class="episodes-page">
+  @if (searchValue && episodesList?.length) {
+  <h4>
+    Encontrados <strong>{{ episodeInfo?.count }}</strong> resultados para
+    "<strong>{{ searchValue }}</strong
+    >"
+  </h4>
+  } @else {
+  <h4>
+    Exibindo <strong>{{ episodeInfo?.count }}</strong> episódios
+  </h4>
+  } @if (episodesList.length) {
   <div class="episodes-grid">
     @for (episode of episodesList; track $index) {
     <app-episode-card [episode]="episode" />
     }
   </div>
+  } @else {
+  <h4>
+    Nenhum resultado encontrado @if (searchValue) {
+    <span
+      >para "<strong>{{ searchValue }}</strong
+      >"</span
+    >
+    }
+  </h4>
+  }
 </section>
+} @else {
+<app-loader />
+}
