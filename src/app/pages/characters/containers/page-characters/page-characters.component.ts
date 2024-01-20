@@ -23,7 +23,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 })
 export class PageCharactersComponent implements OnInit {
   private readonly charactersService = inject(CharactersService);
-  private readonly router = inject(Router);
+
   charactersList: CharacterEntity[];
   nextUrl: string = '';
   constructor() {}
@@ -39,10 +39,6 @@ export class PageCharactersComponent implements OnInit {
         this.charactersList = res.results;
         this.nextUrl = res.info.next;
       });
-  }
-
-  viewCharacterDetail(id) {
-    this.router.navigateByUrl('personagens/' + id);
   }
 
   onScroll() {

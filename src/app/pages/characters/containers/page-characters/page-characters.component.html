@@ -1,11 +1,7 @@
 <section class="characters-page">
   <div class="characters-grid">
     @for (character of charactersList; track $index) {
-    <app-character-card
-      [character]="character"
-      (click)="viewCharacterDetail(character.id)"
-    />
-
+    <app-character-card [character]="character" />
     }
   </div>
 </section>

@@ -12,7 +12,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class PageEpisodesComponent implements OnInit {
   private readonly episodesService = inject(EpisodesService);
-  private readonly router = inject(Router);
+
   episodesList: any[];
 
   constructor() {}
@@ -25,9 +25,5 @@ export class PageEpisodesComponent implements OnInit {
     this.episodesService.getAllEpisodes().subscribe((res: any) => {
       this.episodesList = res.results;
     });
-  }
-
-  viewEpisodeDetail(id) {
-    this.router.navigateByUrl('episodios/' + id);
   }
 }

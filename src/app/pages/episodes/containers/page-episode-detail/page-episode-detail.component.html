@@ -3,7 +3,7 @@
     <mat-icon fontIcon="arrow_back" />
     Voltar
   </button>
-
+  @if (episode) {
   <mat-card class="card">
     <div class="episode-info">
       <div>
@@ -23,6 +23,12 @@
     </div>
     <div class="characters-info">
       <h2>Personagens que apareceram neste Episódio:</h2>
+      <div class="characters-grid mat-elevation-z1">
+        @for (character of charactersList; track $index) {
+        <app-character-card [character]="character" />
+        }
+      </div>
     </div>
   </mat-card>
+  }
 </section>

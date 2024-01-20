@@ -1,10 +1,7 @@
 <section class="episodes-page">
   <div class="episodes-grid">
     @for (episode of episodesList; track $index) {
-    <app-episode-card
-      [episode]="episode"
-      (click)="viewEpisodeDetail(episode.id)"
-    />
+    <app-episode-card [episode]="episode" />
     }
   </div>
 </section>

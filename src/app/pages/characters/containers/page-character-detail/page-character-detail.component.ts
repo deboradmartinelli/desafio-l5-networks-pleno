@@ -29,7 +29,7 @@ export class PageCharacterDetailComponent implements OnInit {
   private readonly episodesService = inject(EpisodesService);
   @Input() id: string = '';
   character: CharacterEntity;
-  episodesList: EpisodeEntity[];
+  episodesList: EpisodeEntity[] = [];
 
   constructor() {}
 
@@ -45,11 +45,14 @@ export class PageCharacterDetailComponent implements OnInit {
   }
 
   getCharacterEpisodes() {
-    const episodesIDs = this.character.episode.map((episodioURL) => {
-      const urlParts = episodioURL.split('/');
-      return urlParts[urlParts.length - 1];
-    });
-    if (!episodesIDs.length) return;
+    if (!this.character.episode.length) return;
+
+    const episodesIDs: Array<string> = this.character.episode.map(
+      (episodioURL) => {
+        const urlParts = episodioURL.split('/');
+        return urlParts[urlParts.length - 1];
+      }
+    );
 
     if (episodesIDs.length === 1) {
       this.episodesService
