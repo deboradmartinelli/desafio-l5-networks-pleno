@@ -7,32 +7,34 @@
   (scrolled)="onScroll()"
   [scrollWindow]="false"
 >
-  @if (searchValue && charactersList?.length) {
-  <h4>
-    Encontrados <strong>{{ characterInfo?.count }}</strong> resultados para
-    "<strong>{{ searchValue }}</strong
-    >"
-  </h4>
-  } @else {
-  <h4>
-    Encontrados <strong>{{ characterInfo?.count }}</strong> personagens
-  </h4>
-  } @if (charactersList.length) {
-  <div class="characters-grid">
-    @for (character of charactersList; track $index) {
-    <app-character-card [character]="character" />
+  <div class="container">
+    @if (charactersList.length) { @if (searchValue) {
+    <h4>
+      Encontrados <strong>{{ characterInfo?.count }}</strong> resultados para
+      "<strong>{{ searchValue }}</strong
+      >"
+    </h4>
+    } @else {
+    <h4>
+      Encontrados <strong>{{ characterInfo?.count }}</strong> personagens
+    </h4>
+    }
+    <div class="characters-grid">
+      @for (character of charactersList; track $index) {
+      <app-character-card [character]="character" />
+      }
+    </div>
+    } @else {
+    <h4>
+      Nenhum resultado encontrado @if (searchValue) {
+      <span
+        >para "<strong>{{ searchValue }}</strong
+        >"</span
+      >
+      }
+    </h4>
     }
   </div>
-  } @else {
-  <h4>
-    Nenhum resultado encontrado @if (searchValue) {
-    <span
-      >para "<strong>{{ searchValue }}</strong
-      >"</span
-    >
-    }
-  </h4>
-  }
 </section>
 } @else {
 <app-loader />

@@ -4,7 +4,7 @@
 }
 
 .detail-page {
-  padding: 48px;
+  padding: clamp(12px, 3vw, 48px);
   width: 100%;
   .card {
     display: flex;
@@ -18,6 +18,7 @@
     margin: top 16px;
     .episode-info {
       display: flex;
+      flex-wrap: wrap;
       margin-top: 16px;
       img {
         height: 270px;
@@ -47,7 +48,7 @@
         background-color: #fafafa;
         border-radius: 4px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(max(550px, 30vw), 2fr));
+        grid-template-columns: repeat(auto-fit, minmax(max(350px, 30vw), 2fr));
         grid-template-rows: auto;
         grid-column-gap: 16px;
         grid-row-gap: 16px;

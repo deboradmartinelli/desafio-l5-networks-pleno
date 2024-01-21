@@ -4,15 +4,18 @@
 
 .characters-page {
   width: 100%;
-  padding: 48px;
+  padding: clamp(12px, 3vw, 48px);
   overflow-y: auto;
   height: calc(100vh - 80px);
   .characters-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(max(550px, 30vw), 2fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(clamp(450px, 20vw, 800px), 2fr)
+    );
     grid-template-rows: auto;
-    grid-column-gap: 65px;
-    grid-row-gap: 55px;
+    grid-column-gap: clamp(16px, 3vw, 65px);
+    grid-row-gap: clamp(16px, 3vw, 55px);
     justify-items: stretch;
     align-items: stretch;
     justify-content: stretch;

@@ -12,6 +12,7 @@ import { SearchService } from '../../../../services/search.service';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { SideMenuComponent } from '../side-menu/side-menu.component';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     FormsModule,
     MatButtonModule,
+    SideMenuComponent,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -32,6 +34,8 @@ export class HeaderComponent implements OnInit {
 
   searchValue;
   searchVisibility;
+
+  mobileMenuOpenState: boolean = false;
 
   constructor() {}
 
@@ -59,5 +63,9 @@ export class HeaderComponent implements OnInit {
   clearSearch() {
     this.searchValue = '';
     this.searchHandler();
+  }
+
+  sideMenuHandler() {
+    this.mobileMenuOpenState = !this.mobileMenuOpenState;
   }
 }

@@ -1,4 +1,11 @@
 <header class="mat-elevation-z2">
+  <button mat-icon-button class="mobile" (click)="sideMenuHandler()">
+    @if (!mobileMenuOpenState) {
+    <mat-icon>menu</mat-icon>
+    } @else {
+    <mat-icon>close</mat-icon>
+    }
+  </button>
   <img class="logo" src="../../../../../../assets/imgs/logo.svg" alt="" />
   @if(searchVisibility) {
   <div class="search-wrapper">
@@ -20,3 +27,8 @@
   </div>
   }
 </header>
+@if (mobileMenuOpenState) {
+<section class="overlay mobile">
+  <app-side-menu />
+</section>
+}
