@@ -20,8 +20,12 @@ header {
   z-index: 100;
   .logo {
     width: 170px;
+    margin-right: auto;
   }
-  @media (max-width: 550px) {
+  button.mobile {
+    margin-right: 16px;
+  }
+  @media (max-width: 650px) {
     .logo {
       display: none;
     }
@@ -31,6 +35,21 @@ header {
     align-items: center;
     button {
       margin-left: -55px;
+    }
+  }
+  .account-btn {
+    max-height: none;
+    height: auto;
+    padding: 4px;
+    flex-direction: row-reverse;
+    margin-left: 16px;
+    .avatar {
+      height: 48px;
+      width: 48px;
+      border-radius: 24px;
+      margin-right: 4px;
+      object-fit: cover;
+      display: block;
     }
   }
 }

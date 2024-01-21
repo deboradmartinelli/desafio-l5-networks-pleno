@@ -26,7 +26,20 @@
     }
   </div>
   }
+  <button mat-button [matMenuTriggerFor]="menu" class="account-btn">
+    <img class="avatar" [src]="userPhoto" alt="" />
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="viewMyAccount()">
+      <mat-icon>account_circle</mat-icon>Minha conta
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>Sair
+    </button>
+  </mat-menu>
 </header>
+
 @if (mobileMenuOpenState) {
 <section class="overlay mobile">
   <app-side-menu />

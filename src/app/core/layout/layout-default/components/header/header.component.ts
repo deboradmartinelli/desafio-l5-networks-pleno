@@ -13,6 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { AuthService } from '../../../../services/auth.service';
+import { AccountService } from '../../../../../pages/account/services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +28,7 @@ import { SideMenuComponent } from '../side-menu/side-menu.component';
     FormsModule,
     MatButtonModule,
     SideMenuComponent,
+    MatMenuModule,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -31,11 +36,15 @@ import { SideMenuComponent } from '../side-menu/side-menu.component';
 export class HeaderComponent implements OnInit {
   @ViewChild('search') searchElem: ElementRef;
   private readonly search = inject(SearchService);
-
+  private readonly auth = inject(AuthService);
+  private readonly account = inject(AccountService);
+  private readonly router = inject(Router);
   searchValue;
   searchVisibility;
 
   mobileMenuOpenState: boolean = false;
+
+  userPhoto;
 
   constructor() {}
 
@@ -45,6 +54,10 @@ export class HeaderComponent implements OnInit {
     });
     this.search.visibility.subscribe((value) => {
       this.searchVisibility = value;
+    });
+
+    this.account.currentUser$.subscribe((value) => {
+      this.userPhoto = '../../../../../../assets/imgs/' + value.avatar;
     });
   }
 
@@ -67,5 +80,13 @@ export class HeaderComponent implements OnInit {
 
   sideMenuHandler() {
     this.mobileMenuOpenState = !this.mobileMenuOpenState;
+  }
+
+  viewMyAccount() {
+    this.router.navigateByUrl('minha-conta');
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

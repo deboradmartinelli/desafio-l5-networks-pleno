@@ -1,0 +1,42 @@
+@if(user) {
+<section class="account-page">
+  <div class="container">
+    <mat-card class="card">
+      <div class="user-info">
+        <img [src]="'../../../../../assets/imgs/' + user.avatar" alt="" />
+        <div>
+          <mat-card-header>
+            <mat-card-title>
+              {{ user.firstName }} {{ user.lastName }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ user.jobTitle }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="content-group">
+              <h3>E-mail:</h3>
+              <a [attr.href]="'mailto:' + user.email">
+                <p>{{ user.email }}</p>
+              </a>
+            </div>
+
+            <div class="content-group">
+              <h3>Sobre:</h3>
+              <div [innerHTML]="user.about"></div>
+            </div>
+
+            <a
+              [attr.href]="user.linkedId"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button mat-flat-button color="primary">LinkedIn</button>
+            </a>
+          </mat-card-content>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</section>
+}
